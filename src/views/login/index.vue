@@ -15,6 +15,7 @@
           <el-button>发送验证码</el-button>
         </el-form-item>
         <el-form-item>
+          <el-checkbox :value="true">我已阅读并同意用户协议和隐私条款</el-checkbox>
           <el-button type="primary" style="width:100%;">登录</el-button>
         </el-form-item>
       </el-form>
@@ -51,7 +52,7 @@ export default {
     transform: translate(-50%, -50%);
     img {
       display: block;
-      width: 260px;
+      width: 200px;
       margin: 0 auto 30px;
     }
   }
