@@ -2,13 +2,13 @@
   <div class="container">
     <el-card class="box-card">
       <img src="../../assets/logo_index.png" alt />
-      <el-form>
-        <el-form-item>
-          <el-input v-model="loginForm.name" placeholder="请输入手机号"></el-input>
+      <el-form status-icon :rules="rules" :model="loginForm" ref="loginFrom">
+        <el-form-item prop="mobile">
+          <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="code">
           <el-input
-            v-model="loginForm.name"
+            v-model="loginForm.code"
             style="width:65%;margin-right:10px;"
             placeholder="请输入验证码"
           ></el-input>
@@ -16,7 +16,7 @@
         </el-form-item>
         <el-form-item>
           <el-checkbox :value="true">我已阅读并同意用户协议和隐私条款</el-checkbox>
-          <el-button type="primary" style="width:100%;">登录</el-button>
+          <el-button type="primary" style="width:100%;" @click="submitForm('loginFrom')">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -26,10 +26,47 @@
 <script>
 export default {
   data () {
+    const codeMobile = (rules, value, callback) => {
+      if (!/^1[3456789]\d{9}$/.test(value)) {
+        callback(new Error('手机号格式有误'))
+      } else {
+        callback()
+      }
+    }
     return {
       loginForm: {
-        name: ''
+        mobile: '',
+        code: ''
+      },
+      rules: {
+        mobile: [
+          { required: true, message: '手机号不能为空', trigger: 'blur' },
+          { validator: codeMobile, trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: '验证码不能为空', trigger: 'blur' },
+          { len: 6, message: '验证码长度有误', trigger: 'blur' }
+        ]
       }
+    }
+  },
+  methods: {
+    submitForm (loginForm) {
+      this.$refs[loginForm].validate(valid => {
+        if (valid) {
+          this.$http({
+            url: 'authorizations',
+            data: this.loginForm,
+            method: 'post'
+          })
+            .then(() => {
+              this.$router.push('/')
+            })
+            .catch(() => {
+              this.$message.error('手机号或验证码有误')
+            })
+        }
+      })
     }
   }
 }
