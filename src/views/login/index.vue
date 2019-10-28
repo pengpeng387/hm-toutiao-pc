@@ -24,6 +24,8 @@
 </template>
 
 <script>
+// 引入工具函数
+import userLocal from 'userLocal'
 export default {
   data () {
     const codeMobile = (rules, value, callback) => {
@@ -51,6 +53,7 @@ export default {
     }
   },
   methods: {
+    // 登录
     submitForm (loginForm) {
       this.$refs[loginForm].validate(valid => {
         if (valid) {
@@ -59,7 +62,10 @@ export default {
             data: this.loginForm,
             method: 'post'
           })
-            .then(() => {
+            .then(res => {
+              // 成功res是响应对象，res.data是响应主题
+              // 保存用户信息(token)
+              userLocal.setUser(res.data.data)
               this.$router.push('/')
             })
             .catch(() => {

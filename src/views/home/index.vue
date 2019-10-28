@@ -70,10 +70,12 @@
 export default {
   data () {
     return {
+      // 折叠菜单栏设的参数
       isCollapse: false
     }
   },
   methods: {
+    // 点击折叠菜单栏
     toggleMenu () {
       this.isCollapse = !this.isCollapse
     }
