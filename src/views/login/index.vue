@@ -54,22 +54,32 @@ export default {
   methods: {
     // 登录
     submitForm (loginForm) {
-      this.$refs[loginForm].validate(valid => {
+      this.$refs[loginForm].validate(async valid => {
+        // if (valid) {
+        //   this.$http({
+        //     url: 'authorizations',
+        //     data: this.loginForm,
+        //     method: 'post'
+        //   })
+        //     .then(res => {
+        //       // 成功res是响应对象，res.data是响应主题
+        //       // 保存用户信息(token)
+        //       userLocal.setUser(res.data.data)
+        //       this.$router.push('/')
+        //     })
+        //     .catch(() => {
+        //       this.$message.error('手机号或验证码有误')
+        //     })
+        // }
+        // async 和 await 改造登录
         if (valid) {
-          this.$http({
-            url: 'authorizations',
-            data: this.loginForm,
-            method: 'post'
-          })
-            .then(res => {
-              // 成功res是响应对象，res.data是响应主题
-              // 保存用户信息(token)
-              userLocal.setUser(res.data.data)
-              this.$router.push('/')
-            })
-            .catch(() => {
-              this.$message.error('手机号或验证码有误')
-            })
+          try {
+            const { data: { data } } = await this.$http.post('authorizations', this.loginForm)
+            userLocal.setUser(data)
+            this.$router.push('/')
+          } catch (e) {
+            this.$message.error('手机号或验证码有误')
+          }
         }
       })
     }
