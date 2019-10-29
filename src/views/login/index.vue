@@ -22,10 +22,9 @@
     </el-card>
   </div>
 </template>
-
 <script>
 // 引入工具函数
-import userLocal from 'userLocal'
+import userLocal from '@/utils/userLocal'
 export default {
   data () {
     const codeMobile = (rules, value, callback) => {
