@@ -47,15 +47,15 @@
       <el-header class="header">
         <span class="el-icon-s-fold icon" @click="toggleMenu"></span>
         <span class="text">江苏传智播客科技教育有限公司</span>
-        <el-dropdown>
-          <span class="el-dropdown-link">
-            <img class="headIcon" src="../../assets/avatar.jpg" alt />
-            <span class="username">用户名</span>
+        <el-dropdown  @command="handleCommand">
+          <span class="el-dropdown-link" >
+            <img class="headIcon" :src="photo" alt />
+            <span class="username">{{name}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock">退出登陆</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-setting" command="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" command="logout">退出登陆</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -67,18 +67,40 @@
 </template>
 
 <script>
+import userLocal from '@/utils/userLocal'
 export default {
   data () {
     return {
       // 折叠菜单栏设的参数
-      isCollapse: false
+      isCollapse: false,
+      // 头像
+      photo: '',
+      // 名称
+      name: ''
     }
   },
   methods: {
     // 点击折叠菜单栏
     toggleMenu () {
       this.isCollapse = !this.isCollapse
+    },
+    setting () {
+      this.$router.push('/setting')
+    },
+    logout () {
+      userLocal.delUser()
+      this.$router.push('/login')
+    },
+    handleCommand (command) {
+      this[command]()
     }
+  },
+  created () {
+    // 得到数据
+    const data = userLocal.getUser() || {}
+    // 赋值
+    this.photo = data.photo
+    this.name = data.name
   }
 }
 </script>
