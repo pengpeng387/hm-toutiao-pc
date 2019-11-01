@@ -4,19 +4,27 @@ import axios from 'axios'
 import userLocal from '@/utils/userLocal'
 import router from '@/router'
 
+import JSONBIG from 'json-bigint'
+
 // 设置基准地址
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
-
-// 导出axios
-export default axios
-
+// 解决js有最大安全数值，引用第三方插件
+axios.defaults.transformResponse = [(data) => {
+  // 后台原始数据
+  try {
+    // 有错误就用JSONBIG解决
+    return JSONBIG.parse(data)
+  } catch (e) {
+    return data
+  }
+}]
 // 因为登录进去，刷新才能存储cookie
 // 添加请求拦截器
 axios.interceptors.request.use(config => {
   // 1、获取token
-  const data = userLocal.getUser || {}
+  const user = userLocal.getUser() || {}
   // 2、头部设置token
-  config.headers.Authorization = `Bearer ${data.token}`
+  config.headers.Authorization = `Bearer ${user.token}`
   return config
 }, err => Promise.reject(err))
 
@@ -29,3 +37,6 @@ axios.interceptors.response.use(res => res, err => {
   }
   return Promise.reject(err)
 })
+
+// 导出axios
+export default axios

@@ -8,6 +8,10 @@ import router from '@/router'
 // 引入axios
 import axios from '@/api'
 
+// 引入自己封装的全局插件
+import plugin from '@/components'
+
+Vue.use(plugin)
 Vue.use(ElementUi)
 
 // 挂载axios

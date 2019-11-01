@@ -3,7 +3,7 @@
     <el-aside :width="isCollapse?'64px':'200px'">
       <div class="logo" :class="{smallLogo:isCollapse}"></div>
       <el-menu
-        default-active="/"
+        :default-active="$route.path"
         class="el-menu-vertical-demo"
         background-color="#002033"
         text-color="#fff"
@@ -47,8 +47,8 @@
       <el-header class="header">
         <span class="el-icon-s-fold icon" @click="toggleMenu"></span>
         <span class="text">江苏传智播客科技教育有限公司</span>
-        <el-dropdown  @command="handleCommand">
-          <span class="el-dropdown-link" >
+        <el-dropdown @command="handleCommand">
+          <span class="el-dropdown-link">
             <img class="headIcon" :src="photo" alt />
             <span class="username">{{name}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
