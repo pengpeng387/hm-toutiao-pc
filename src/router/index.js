@@ -6,6 +6,7 @@ import home from '@/views/home'
 import welcome from '@/views/welcome'
 import NotFound from '@/views/404'
 import article from '@/views/article'
+import image from '@/views/image'
 
 // 引入工具
 import userLogin from '@/utils/userLocal'
@@ -28,6 +29,10 @@ const router = new VueRouter({
       {
         path: '/article',
         component: article
+      },
+      {
+        path: '/image',
+        component: image
       }
     ]
   },
