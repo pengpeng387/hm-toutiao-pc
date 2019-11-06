@@ -7,6 +7,8 @@ import welcome from '@/views/welcome'
 import NotFound from '@/views/404'
 import article from '@/views/article'
 import image from '@/views/image'
+import publish from '@/views/publish'
+import comment from '@/views/comment'
 
 // 引入工具
 import userLogin from '@/utils/userLocal'
@@ -33,6 +35,14 @@ const router = new VueRouter({
       {
         path: '/image',
         component: image
+      },
+      {
+        path: '/publish',
+        component: publish
+      },
+      {
+        path: '/comment',
+        component: comment
       }
     ]
   },
