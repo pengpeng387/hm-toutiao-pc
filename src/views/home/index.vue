@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import eventBus from '@/eventBus'
 import userLocal from '@/utils/userLocal'
 export default {
   data () {
@@ -101,6 +102,12 @@ export default {
     // 赋值
     this.photo = data.photo
     this.name = data.name
+    eventBus.$on('userName', name => {
+      this.name = name
+    })
+    eventBus.$on('photo', photo => {
+      this.photo = photo
+    })
   }
 }
 </script>

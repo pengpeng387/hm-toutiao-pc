@@ -9,6 +9,7 @@ import article from '@/views/article'
 import image from '@/views/image'
 import publish from '@/views/publish'
 import comment from '@/views/comment'
+import setting from '@/views/setting'
 
 // 引入工具
 import userLogin from '@/utils/userLocal'
@@ -43,6 +44,10 @@ const router = new VueRouter({
       {
         path: '/comment',
         component: comment
+      },
+      {
+        path: '/setting',
+        component: setting
       }
     ]
   },
