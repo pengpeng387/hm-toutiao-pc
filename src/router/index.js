@@ -10,6 +10,7 @@ import image from '@/views/image'
 import publish from '@/views/publish'
 import comment from '@/views/comment'
 import setting from '@/views/setting'
+import fans from '@/views/fans'
 
 // 引入工具
 import userLogin from '@/utils/userLocal'
@@ -48,6 +49,10 @@ const router = new VueRouter({
       {
         path: '/setting',
         component: setting
+      },
+      {
+        path: '/fans',
+        component: fans
       }
     ]
   },
